@@ -1,11 +1,16 @@
 package com.incubyte.tdd.domain;
 
+import com.incubyte.tdd.service.Verifier;
+import com.incubyte.tdd.service.impl.LengthVerifier;
+
 public class Password {
 
     private String value;
+    private Verifier verifier;
     
     public Password(String value) {
         this.value = value;
+        this.verifier = new LengthVerifier(8);
     }
 
     public String getValue() {
@@ -13,6 +18,6 @@ public class Password {
     }
     
     public void validate() {
-        throw new UnsupportedOperationException();
+        verifier.verify(this.getValue());
     }
 }
