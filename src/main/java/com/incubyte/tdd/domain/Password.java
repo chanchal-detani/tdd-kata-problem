@@ -16,6 +16,7 @@ import com.incubyte.tdd.service.impl.NumberVerifier;
 public class Password {
     
     public static final String MINIMUM_VALID_CHECKS = "minimumValidChecks";
+    public static final String REQUIRED_CHECKS = "requiredChecks";
 
     private String value;
     private List<Verifier> verifiers = new ArrayList<>();
@@ -60,6 +61,19 @@ public class Password {
                 if(validVerifiers <= minimumAllowedVerifiers) {
                     throw new VerificationFailedException("Password is not OK since at least "+minimumAllowedVerifiers+" conditions haven't met");
                 }
+                
+            } else if(this.getMiscelleneousFeatures().containsKey(REQUIRED_CHECKS)) {
+                List<Verifier> verifiers = (List<Verifier>) this.getMiscelleneousFeatures().get(REQUIRED_CHECKS);
+                
+                Optional<Verifier> invalidVerifierOptional = verifiers.stream().filter(verifier -> !verifier.verify(this.getValue())).findAny();
+                
+                if(invalidVerifierOptional.isPresent())
+                    invalidVerifierOptional.get().throwException();
+                
+                // once required verifiers are valid, checking for default verifiers
+                invalidVerifierOptional = verifiers.stream().filter(verifier -> !verifiers.contains(verifier) && !verifier.verify(this.getValue())).findAny();
+                if(invalidVerifierOptional.isPresent())
+                    invalidVerifierOptional.get().throwException();
                 
             }
             

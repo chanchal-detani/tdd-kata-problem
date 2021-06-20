@@ -12,7 +12,6 @@ import org.junit.Test;
 import com.incubyte.tdd.domain.Password;
 import com.incubyte.tdd.exception.VerificationFailedException;
 import com.incubyte.tdd.service.Verifier;
-import com.incubyte.tdd.service.impl.CaseVerifier;
 import com.incubyte.tdd.service.impl.NumberVerifier;
 
 public class PasswordVerificationTest {
@@ -96,7 +95,7 @@ public class PasswordVerificationTest {
             List<Verifier> verifiers = new ArrayList<>();
             verifiers.add(new NumberVerifier(2));
             new Password("password")
-                .addFeature("requiredChecks", verifiers)
+                .addFeature(Password.REQUIRED_CHECKS, verifiers)
                 .validate();
             
         });
