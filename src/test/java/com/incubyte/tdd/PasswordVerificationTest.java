@@ -40,4 +40,14 @@ public class PasswordVerificationTest {
 
         assertEquals("Password should not be blank.", exception.getMessage());
     }
+    
+    @Test public void
+    should_throw_exception_for_minimum_uppercase_characters() {
+     // checking against blank password
+        Throwable exception = assertThrows(VerificationFailedException.class, () -> {
+            new Password("password").validate();
+        });
+
+        assertEquals("Password should have at least 1 uppercase character.", exception.getMessage());
+    }
 }
