@@ -76,7 +76,7 @@ public class PasswordVerificationTest {
         // checking against minimum conditions i.e. 3  are satisfying or not. if not should fail else should pass
         
         Throwable exception = assertThrows(VerificationFailedException.class, () -> {
-            new Password("").addFeature("minimumValidChecks",3).validate();
+            new Password("").addFeature(Password.MINIMUM_VALID_CHECKS,3).validate();
         });
 
         assertEquals("Password is not OK since at least 3 conditions haven't met", exception.getMessage());
