@@ -18,6 +18,9 @@ public class Password {
     }
     
     public void validate() {
-        verifier.verify(this.getValue());
+        boolean isValid = verifier.verify(this.getValue());
+        if(!isValid) {
+            verifier.throwException();
+        }
     }
 }

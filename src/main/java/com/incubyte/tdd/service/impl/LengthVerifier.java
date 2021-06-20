@@ -1,5 +1,6 @@
 package com.incubyte.tdd.service.impl;
 
+import com.incubyte.tdd.exception.VerificationFailedException;
 import com.incubyte.tdd.service.Verifier;
 
 public class LengthVerifier implements Verifier {
@@ -27,6 +28,12 @@ public class LengthVerifier implements Verifier {
     @Override
     public String toString() {
         return "LengthVerifier [minLength=" + minLength + "]";
+    }
+
+    @Override
+    public void throwException() {
+        throw new VerificationFailedException("Password should be at least "+minLength+" characters long.");
+        
     }
 
 }
