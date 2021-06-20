@@ -30,4 +30,14 @@ public class PasswordVerificationTest {
         assertEquals("Password should be at least 8 characters long.", exception.getMessage());
 
     }
+    
+    @Test public void
+    should_throw_exception_for_blank_password() {
+     // checking against blank password
+        Throwable exception = assertThrows(VerificationFailedException.class, () -> {
+            new Password("").validate();
+        });
+
+        assertEquals("Password should not be blank.", exception.getMessage());
+    }
 }
