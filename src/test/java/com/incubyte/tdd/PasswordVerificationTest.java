@@ -43,7 +43,7 @@ public class PasswordVerificationTest {
     
     @Test public void
     should_throw_exception_for_minimum_uppercase_characters() {
-     // checking against blank password
+     // checking against minimum upper-case characters
         Throwable exception = assertThrows(VerificationFailedException.class, () -> {
             new Password("password").validate();
         });
@@ -53,11 +53,21 @@ public class PasswordVerificationTest {
     
     @Test public void
     should_throw_exception_for_minimum_lowercase_characters() {
-     // checking against blank password
+     // checking against minimum lower-case characters
         Throwable exception = assertThrows(VerificationFailedException.class, () -> {
             new Password("PASSWORD").validate();
         });
 
         assertEquals("Password should have at least 1 uppercase characters and 1 lowercase characters", exception.getMessage());
+    }
+    
+    @Test public void
+    should_throw_exception_for_minimum_number_allowed() {
+     // checking against minimum number/digits allowed
+        Throwable exception = assertThrows(VerificationFailedException.class, () -> {
+            new Password("Password").validate();
+        });
+
+        assertEquals("Password should have at least 1 number", exception.getMessage());
     }
 }
