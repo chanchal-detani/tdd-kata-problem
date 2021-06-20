@@ -48,7 +48,7 @@ public class PasswordVerificationTest {
             new Password("password").validate();
         });
 
-        assertEquals("Password should have at least 1 uppercase character.", exception.getMessage());
+        assertEquals("Password should have at least 1 uppercase characters and 1 lowercase characters", exception.getMessage());
     }
     
     @Test public void
@@ -58,6 +58,6 @@ public class PasswordVerificationTest {
             new Password("PASSWORD").validate();
         });
 
-        assertEquals("Password should have at least 1 lowercase character.", exception.getMessage());
+        assertEquals("Password should have at least 1 uppercase characters and 1 lowercase characters", exception.getMessage());
     }
 }
