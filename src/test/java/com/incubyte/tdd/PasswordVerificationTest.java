@@ -15,7 +15,7 @@ public class PasswordVerificationTest {
     public void test_password_length() {
         // positive test case
         // password should be of 8 characters long
-        new Password("Password").validate();
+        new Password("Password1").validate();
         assertTrue(true);
     }
 

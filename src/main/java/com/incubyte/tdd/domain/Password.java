@@ -7,6 +7,7 @@ import java.util.Optional;
 import com.incubyte.tdd.service.Verifier;
 import com.incubyte.tdd.service.impl.BlankVerifier;
 import com.incubyte.tdd.service.impl.LengthVerifier;
+import com.incubyte.tdd.service.impl.NumberVerifier;
 import com.incubyte.tdd.service.impl.CaseVerifier;
 
 public class Password {
@@ -19,6 +20,7 @@ public class Password {
         this.verifiers.add(new BlankVerifier());
         this.verifiers.add(new LengthVerifier(8));
         this.verifiers.add(new CaseVerifier(1, 1));
+        this.verifiers.add(new NumberVerifier(1));
     }
 
     public String getValue() {
