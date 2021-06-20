@@ -4,10 +4,16 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
 import com.incubyte.tdd.domain.Password;
 import com.incubyte.tdd.exception.VerificationFailedException;
+import com.incubyte.tdd.service.Verifier;
+import com.incubyte.tdd.service.impl.CaseVerifier;
+import com.incubyte.tdd.service.impl.NumberVerifier;
 
 public class PasswordVerificationTest {
 
@@ -80,5 +86,21 @@ public class PasswordVerificationTest {
         });
 
         assertEquals("Password is not OK since at least 3 conditions haven't met", exception.getMessage());
+    }
+    
+    @Test public void
+    should_fail_if_given_check_fails() {
+        // checking against check priority i.e. first given check should get performed before default ones.
+        
+        Throwable exception = assertThrows(VerificationFailedException.class, () -> {
+            List<Verifier> verifiers = new ArrayList<>();
+            verifiers.add(new NumberVerifier(2));
+            new Password("password")
+                .addFeature("requiredChecks", verifiers)
+                .validate();
+            
+        });
+        assertEquals("Password should have at least 2 number", exception.getMessage());
+        
     }
 }
