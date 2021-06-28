@@ -7,15 +7,24 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import com.incubyte.tdd.domain.Password;
 import com.incubyte.tdd.exception.VerificationFailedException;
 import com.incubyte.tdd.service.Verifier;
 import com.incubyte.tdd.service.impl.NumberVerifier;
+import com.sun.org.slf4j.internal.Logger;
 
 public class PasswordVerificationTest {
-
+    
+    private Logger logger;
+    @Before public void init() {
+        logger = Mockito.mock(Logger.class);
+    }
+    
     @Test
     public void test_password_length() {
         // positive test case
@@ -40,9 +49,10 @@ public class PasswordVerificationTest {
     should_throw_exception_for_blank_password() {
      // checking against blank password
         Throwable exception = assertThrows(VerificationFailedException.class, () -> {
-            new Password("").validate();
+            new Password("", logger).validate();
         });
-
+        // Verify that LoggingDAO.logAB is also called
+        Mockito.verify(logger, Mockito.times(1)).log(Mockito.any(),Mockito.any());
         assertEquals("Password should not be blank.", exception.getMessage());
     }
     
